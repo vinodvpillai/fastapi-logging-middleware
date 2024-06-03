@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import uvicorn
+from middleware import log_middleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 app = FastAPI()
+app.add_middleware(BaseHTTPMiddleware, dispatch=log_middleware)
 
 @app.get('/')
 async def root() -> dict:
